@@ -9,6 +9,7 @@ app = Flask(__name__)
 name = []
 amount = []
 value = []
+result = 0
 
 def parse():
     url = "https://www.cbr.ru/currency_base/daily/"
@@ -19,7 +20,6 @@ def parse():
     for unit in currs:
         info.append(unit.text.replace('\n','|'))
     return info
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -33,8 +33,6 @@ def index():
             name.append('(' + info[1] + '|' + info[2] + ') ' +  info[4])
             value.append((float(info[5].replace(',','.'))/int(info[3])))
     return render_template("index.html", curr_name=name, curr_name2=name)
-
-
 @app.route('/', methods=['post', 'get'])
 def form():
     if request.method == 'POST':
@@ -54,9 +52,10 @@ def form():
                 selected_curr_inp=obj
             if name[obj][1:4]==option2[1:4]:
                 selected_curr_out=obj
+        global result
         result = inp_value*value[selected_curr_inp]/value[selected_curr_out]
-    return render_template('index.html', ans= str(inp_value)+' '+option1[5:8]+' = ' + format_string('%.2f', result, grouping=True) + ' '+option2[5:8], curr_name=name, curr_name2=name)
-
-
+    return render_template('index.html', ans='{0} {1} = {2} {3}'.format(str(inp_value), option1[5:8],
+                                                                        format_string('%.2f', result, grouping=True),
+                                                                        option2[5:8]), curr_name=name, curr_name2=name)
 if __name__ == '__main__':
     app.run()
