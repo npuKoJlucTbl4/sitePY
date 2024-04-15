@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Конвертер валют</title>
+</head>
+<body>
+<form action="" method="post">
+    <p>
+        Выберите валюту и введите сумму
+    </p>
+    <div>
+        <input type="number" step=any name="num_1">
+    <select id="dropdown_list" style="width: 300px;" name="droplist1">
+        {% for item in curr_name %}
+        <option>{{ item }}</option>
+        {% endfor %}
+    </select>
+        </div>
+    <p>
+        Выберите валюту для конвертирования
+    </p>
+    <select id="dropdown_list" style="width: 300px;" name="droplist2">
+      {% for item in curr_name2 %}
+      <option>{{ item }}</option>
+      {% endfor %}
+  </select>
+    <input type="submit">
+    <p>
+        Результат:
+    </p>
+</form>
+<h1>{{ans}}</h1>
+</body>
+</html>
