@@ -1,6 +1,4 @@
 import unittest
-from locale import format_string
-
 import mypythonsite
 from mypythonsite import app
 
